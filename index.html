@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Güçlü Şifre Üreteci - Güvenli şifreler oluşturun ve yönetin">
+    <meta name="keywords" content="şifre üreteci, password generator, güvenlik, şifre yönetimi">
+    <meta name="author" content="Güçlü Şifre Üreteci">
+
+    <title>🔐 Güçlü Şifre Üreteci</title>
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E🔐%3C/text%3E%3C/svg%3E">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Karşılama Ekranı -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-overlay"></div>
+        <div class="welcome-content">
+            <div class="welcome-logo">
+                <div class="logo-icon">🔐</div>
+                <h1 class="logo-title">Güçlü Şifre Üreteci</h1>
+                <div class="logo-subtitle">Güvenli şifreler, kolay yönetim</div>
+            </div>
+
+            <div class="welcome-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-content">
+                        <h3>Veri Güvenliği</h3>
+                        <p>Tüm verileriniz cihazınızda yerel olarak saklanır. Hiçbir sunucuya gönderilmez veya paylaşılmaz.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-content">
+                        <h3>Hızlı Üretim</h3>
+                        <p>Güçlü algoritmalarla saniyeler içinde güvenli şifreler oluşturun.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-content">
+                        <h3>Her Cihazda</h3>
+                        <p>Responsive tasarım ile telefon, tablet ve bilgisayarda mükemmel çalışır.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-content">
+                        <h3>Kullanıcı Sayısı</h3>
+                        <div class="user-count">
+                            <span class="count-number" id="user-count">1</span>
+                            <span class="count-text">kişi güvenle kullanıyor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="welcome-actions">
+                <button id="start-app" class="start-button">
+                    <span class="button-text">Uygulamayı Başlat</span>
+                    <span class="button-icon">🚀</span>
+                </button>
+
+                <div class="welcome-footer">
+                    <p>🔒 Verileriniz %100 güvende • 📊 Kullanıcı sayısı anonim olarak toplanır</p>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <button id="menu-toggle" class="menu-toggle" aria-label="Menü aç/kapat">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+
+                <h1 class="app-title">🔐 Güçlü Şifre Üreteci</h1>
+
+                <div class="header-actions">
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Tema değiştir">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Menu -->
+        <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Ana navigasyon">
+            <div class="nav-header">
+                <h2>Menü</h2>
+                <button id="nav-close" class="nav-close" aria-label="Menü kapat">✕</button>
+            </div>
+
+            <ul class="nav-list">
+                <li>
+                    <button id="nav-generator" class="nav-item active" data-section="generator">
+                        <span class="nav-icon">🔐</span>
+                        <span class="nav-text">Şifre Üret</span>
+                    </button>
+                </li>
+                <li>
+                    <button id="nav-saved" class="nav-item" data-section="saved">
+                        <span class="nav-icon">💾</span>
+                        <span class="nav-text">Kaydedilen Şifreler</span>
+                    </button>
+                </li>
+                <li>
+                    <button id="nav-categories" class="nav-item" data-section="categories">
+                        <span class="nav-icon">📁</span>
+                        <span class="nav-text">Kategoriler</span>
+                    </button>
+                </li>
+                <li>
+                    <button id="nav-settings" class="nav-item" data-section="settings">
+                        <span class="nav-icon">⚙️</span>
+                        <span class="nav-text">Ayarlar</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Ana İçerik -->
+        <main class="main-content">
+            <!-- Şifre Üreteci Bölümü -->
+            <section id="generator-section" class="section active" role="main" aria-labelledby="generator-title">
+                <div class="section-header">
+                    <h2 id="generator-title">Şifre Üret</h2>
+                    <p class="section-description">Güvenli ve güçlü şifreler oluşturun</p>
+                </div>
+
+                <div class="generator-container">
+                    <!-- Şifre Çıktısı -->
+                    <div class="password-output">
+                        <div class="password-display">
+                            <input
+                                type="text"
+                                id="password-output"
+                                class="password-input"
+                                readonly
+                                placeholder="Şifre üretmek için ayarları yapın..."
+                                aria-label="Oluşturulan şifre"
+                            >
+                            <button id="toggle-visibility" class="visibility-toggle" aria-label="Şifreyi göster/gizle">
+                                👁️
+                            </button>
+                        </div>
+
+                        <div class="password-actions">
+                            <button id="copy-password" class="action-btn copy-btn" aria-label="Şifreyi kopyala">
+                                📋 Kopyala
+                            </button>
+                            <button id="save-password" class="action-btn save-btn" aria-label="Şifreyi kaydet">
+                                💾 Kaydet
+                            </button>
+                            <button id="regenerate-password" class="action-btn generate-btn" aria-label="Yeni şifre üret">
+                                🔄 Yenile
+                            </button>
+                        </div>
+
+                        <!-- Güvenlik Göstergesi -->
+                        <div class="security-indicator">
+                            <div class="strength-label">
+                                <span>Güvenlik Seviyesi:</span>
+                                <span id="strength-text" class="strength-text">Henüz hesaplanmadı</span>
+                            </div>
+                            <div class="strength-bar">
+                                <div id="strength-bar" class="strength-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="strength-details">
+                                <span id="strength-bits" class="strength-bits">0 bit</span>
+                                <span id="crack-time" class="crack-time">Tahmini kırılma: Bilinmiyor</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ayarlar Paneli -->
+                    <div class="settings-panel">
+                        <h3 class="panel-title">Ayarlar</h3>
+
+                        <!-- Uzunluk Ayarı -->
+                        <div class="setting-group">
+                            <label for="length-slider" class="setting-label">
+                                Uzunluk: <span id="length-value">12</span> karakter
+                            </label>
+                            <input
+                                type="range"
+                                id="length-slider"
+                                class="setting-slider"
+                                min="4"
+                                max="64"
+                                value="12"
+                                aria-describedby="length-value"
+                            >
+                        </div>
+
+                        <!-- Karakter Seçenekleri -->
+                        <div class="setting-group">
+                            <h4 class="setting-subtitle">Karakter Türleri</h4>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-uppercase" checked>
+                                <span class="checkmark"></span>
+                                Büyük Harf (A-Z)
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-lowercase" checked>
+                                <span class="checkmark"></span>
+                                Küçük Harf (a-z)
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-numbers" checked>
+                                <span class="checkmark"></span>
+                                Rakam (0-9)
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="include-symbols" checked>
+                                <span class="checkmark"></span>
+                                Özel Karakterler (!@#$%^&*)
+                            </label>
+                        </div>
+
+                        <!-- Önizleme -->
+                        <div class="setting-group">
+                            <h4 class="setting-subtitle">Önizleme</h4>
+                            <div id="character-preview" class="character-preview">
+                                Seçilen karakterler burada görünecek
+                            </div>
+                        </div>
+
+                        <!-- Hızlı Üretim -->
+                        <div class="setting-group">
+                            <button id="quick-generate" class="quick-generate-btn">
+                                ⚡ Hızlı Üret (Önerilen Ayarlar)
+                            </button>
+                            <button id="auto-generate-save" class="quick-generate-btn auto-save-btn">
+                                🚀 Otomatik Üret ve Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Kaydedilen Şifreler Bölümü -->
+            <section id="saved-section" class="section" role="main" aria-labelledby="saved-title">
+                <div class="section-header">
+                    <h2 id="saved-title">Kaydedilen Şifreler</h2>
+                    <p class="section-description">Kaydettiğiniz şifreleri yönetin</p>
+                </div>
+
+                <div class="saved-container">
+                    <!-- Arama ve Filtre -->
+                    <div class="saved-controls">
+                        <div class="search-group">
+                            <input
+                                type="text"
+                                id="search-input"
+                                placeholder="Şifre adı ile ara..."
+                                class="search-input"
+                            >
+                            <button id="clear-search" class="clear-search-btn" aria-label="Aramayı temizle">
+                                ✕
+                            </button>
+                        </div>
+
+                        <select id="category-filter" class="category-filter">
+                            <option value="all">Tüm Kategoriler</option>
+                            <!-- Kategoriler JavaScript ile eklenecek -->
+                        </select>
+
+                        <button id="export-passwords" class="export-btn">
+                            📥 Dışa Aktar
+                        </button>
+                    </div>
+
+                    <!-- Şifre Listesi -->
+                    <div class="passwords-list" id="passwords-list">
+                        <div class="empty-state">
+                            <div class="empty-icon">🔐</div>
+                            <h3>Henüz şifre kaydetmediniz</h3>
+                            <p>Şifre üreterek kaydetmeye başlayabilirsiniz</p>
+                        </div>
+                    </div>
+
+                    <!-- Sayfa Navigasyonu -->
+                    <div class="pagination" id="pagination">
+                        <!-- JavaScript ile oluşturulacak -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Kategoriler Bölümü -->
+            <section id="categories-section" class="section" role="main" aria-labelledby="categories-title">
+                <div class="section-header">
+                    <h2 id="categories-title">Kategoriler</h2>
+                    <p class="section-description">Şifrelerinizi kategorilere ayırın</p>
+                </div>
+
+                <div class="categories-container">
+                    <!-- Yeni Kategori Ekle -->
+                    <div class="add-category-card">
+                        <button id="add-category-btn" class="add-category-button">
+                            <span class="add-icon">➕</span>
+                            <span class="add-text">Yeni Kategori</span>
+                        </button>
+                    </div>
+
+                    <!-- Kategori Listesi -->
+                    <div class="categories-grid" id="categories-grid">
+                        <!-- JavaScript ile oluşturulacak -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ayarlar Bölümü -->
+            <section id="settings-section" class="section" role="main" aria-labelledby="settings-title">
+                <div class="section-header">
+                    <h2 id="settings-title">Ayarlar</h2>
+                    <p class="section-description">Uygulama ayarlarını yönetin</p>
+                </div>
+
+                <div class="settings-container">
+                    <div class="settings-group">
+                        <h3>Görünüm</h3>
+                        <label class="setting-item">
+                            <input type="checkbox" id="auto-copy">
+                            <span class="setting-text">Şifre üretildiğinde otomatik kopyala</span>
+                        </label>
+
+                        <label class="setting-item">
+                            <input type="checkbox" id="show-strength" checked>
+                            <span class="setting-text">Güvenlik seviyesini göster</span>
+                        </label>
+
+                        <label class="setting-item">
+                            <input type="checkbox" id="save-history" checked>
+                            <span class="setting-text">Üretim geçmişini kaydet</span>
+                        </label>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Veri Yönetimi</h3>
+                        <button id="export-data" class="data-btn export-data-btn">
+                            📤 Tüm Verileri Dışa Aktar
+                        </button>
+                        <button id="import-data" class="data-btn import-data-btn">
+                            📥 Veri İçe Aktar
+                        </button>
+                        <button id="clear-data" class="data-btn clear-data-btn danger">
+                            🗑️ Tüm Verileri Sil
+                        </button>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Hakkında</h3>
+                        <p class="about-text">
+                            <strong>Güçlü Şifre Üreteci</strong><br>
+                            Güvenli şifreler oluşturmak için tasarlandı.<br>
+                            Tüm veriler cihazınızda yerel olarak saklanır.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Toast Bildirimleri -->
+        <div id="toast-container" class="toast-container" role="log" aria-live="assertive" aria-label="Bildirimler">
+            <!-- Toast mesajları buraya eklenecek -->
+        </div>
+
+        <!-- Kategori Ekleme Modal -->
+        <div id="add-category-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="add-category-title">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="add-category-title">Yeni Kategori Ekle</h3>
+                    <button class="modal-close" aria-label="Modal kapat">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="new-category-name">Kategori Adı:</label>
+                        <input type="text" id="new-category-name" placeholder="örn: Sosyal Medya, İş..." maxlength="30">
+                        <small class="form-help">Kategorinin adı (en fazla 30 karakter)</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="add-category-confirm" class="modal-btn primary">➕ Ekle</button>
+                    <button id="add-category-cancel" class="modal-btn secondary">İptal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Şifre Kaydetme Modal -->
+        <div id="save-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="save-modal-title">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="save-modal-title">Şifreyi Kaydet</h3>
+                    <button class="modal-close" aria-label="Modal kapat">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="save-form">
+                        <div class="form-group">
+                            <label for="save-name">Şifre Adı:</label>
+                            <input type="text" id="save-name" placeholder="örn: Gmail, Facebook..." maxlength="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="save-password-display">Şifre:</label>
+                            <input type="text" id="save-password-display" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="save-category">Kategori:</label>
+                            <select id="save-category">
+                                <option value="">Kategori seçin...</option>
+                                <!-- Kategoriler JavaScript ile eklenecek -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="save-notes">Notlar (opsiyonel):</label>
+                            <textarea id="save-notes" placeholder="Ek bilgiler..." maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-confirm" class="modal-btn primary">💾 Kaydet</button>
+                    <button id="save-cancel" class="modal-btn secondary">İptal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript Dosyaları -->
+        <script src="app.js"></script>
+    </div>
+</body>
+</html>
