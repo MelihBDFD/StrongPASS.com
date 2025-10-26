@@ -1,6 +1,156 @@
 // ============================================
-// Güçlü Şifre Üreteci - Ana JavaScript Dosyası
+// Password Generator - Main Bootstrap File
 // ============================================
+
+// Import all modules
+import './constants.js';
+import './config.js';
+import './utils.js';
+import './validation.js';
+import './storage.js';
+import './password.js';
+import './analysis.js';
+import './animations.js';
+import './ui.js';
+import './main.js';
+
+// Legacy support for older browsers
+if (typeof module === 'undefined' || !module.exports) {
+    // Load scripts synchronously for older browsers
+    const scripts = [
+        'constants.js',
+        'config.js',
+        'utils.js',
+        'validation.js',
+        'storage.js',
+        'password.js',
+        'analysis.js',
+        'animations.js',
+        'ui.js',
+        'main.js'
+    ];
+
+    scripts.forEach(script => {
+        const scriptElement = document.createElement('script');
+        scriptElement.src = script;
+        scriptElement.type = 'module';
+        document.head.appendChild(scriptElement);
+    });
+}
+
+// Initialize application when all modules are loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Ensure all modules are loaded
+    const requiredModules = [
+        'CONSTANTS',
+        'Config',
+        'Utils',
+        'Validation',
+        'StorageManager',
+        'PasswordGenerator',
+        'SecurityAnalyzer',
+        'AnimationManager',
+        'UIManager',
+        'PasswordGeneratorApp',
+        'WelcomeScreen'
+    ];
+
+    const checkModules = () => {
+        const allLoaded = requiredModules.every(module => {
+            if (typeof window[module] !== 'undefined') return true;
+            if (typeof module === 'string' && eval(`typeof ${module} !== 'undefined'`)) return true;
+            return false;
+        });
+
+        if (allLoaded) {
+            // All modules loaded, initialize application
+            console.log('🎯 All modules loaded successfully!');
+
+            // Start the application
+            if (typeof WelcomeScreen !== 'undefined') {
+                const welcomeScreen = new WelcomeScreen();
+            }
+
+            if (typeof PasswordGeneratorApp !== 'undefined') {
+                window.app = new PasswordGeneratorApp();
+            }
+
+        } else {
+            // Check again after a short delay
+            setTimeout(checkModules, 100);
+        }
+    };
+
+    // Start checking modules
+    setTimeout(checkModules, 50);
+});
+
+// Error handling for module loading
+window.addEventListener('error', (event) => {
+    if (event.filename && event.filename.includes('.js')) {
+        console.error('Module loading error:', event.filename, event.error);
+
+        // Show user-friendly error
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f5c6cb;
+            text-align: center;
+            z-index: 10000;
+            max-width: 400px;
+        `;
+        errorDiv.innerHTML = `
+            <h3>⚠️ Modül Yükleme Hatası</h3>
+            <p><strong>${event.filename}</strong> dosyası yüklenemedi.</p>
+            <p>Sayfayı yenileyerek tekrar deneyin.</p>
+            <button onclick="location.reload()" style="
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+            ">Sayfayı Yenile</button>
+        `;
+        document.body.appendChild(errorDiv);
+    }
+});
+
+// Performance monitoring
+if (config?.get('debug')) {
+    window.addEventListener('load', () => {
+        const perfData = performance.getEntriesByType('resource');
+        const jsFiles = perfData.filter(entry => entry.name.includes('.js'));
+
+        console.log('📊 Module Loading Performance:');
+        jsFiles.forEach(file => {
+            console.log(`  ${file.name}: ${file.duration.toFixed(2)}ms`);
+        });
+    });
+}
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        initialize: () => {
+            if (typeof WelcomeScreen !== 'undefined') {
+                return new WelcomeScreen();
+            }
+            if (typeof PasswordGeneratorApp !== 'undefined') {
+                return new PasswordGeneratorApp();
+            }
+            return null;
+        }
+    };
+}
 
 // PasswordGenerator Sınıfı - Şifre üretimi motoru
 class PasswordGenerator {
@@ -69,6 +219,7 @@ class PasswordGenerator {
 
     // Kullanılacak karakter setini döndür
     getCharacterPool(options = {}) {
+        // Varsayılan seçenekler
         const {
             includeUppercase = true,
             includeLowercase = true,
@@ -77,6 +228,8 @@ class PasswordGenerator {
         } = options;
 
         let charPool = '';
+
+        // Checkbox'lardan gelen gerçek değerleri kontrol et
         if (includeUppercase) charPool += this.charSets.uppercase;
         if (includeLowercase) charPool += this.charSets.lowercase;
         if (includeNumbers) charPool += this.charSets.numbers;
@@ -522,19 +675,20 @@ class UIManager {
         // Modal'ları başlangıçta kapat
         this.ensureModalsClosed();
 
+        // Checkbox'ların başlangıç değerlerini ayarla
+        this.initializeCheckboxes();
+
         // Toast container oluştur
         this.createToastContainer();
     }
 
-    // Modal'ların başlangıçta kapalı olduğundan emin ol
-    ensureModalsClosed() {
-        if (this.elements.saveModal) {
-            this.elements.saveModal.classList.remove('active');
-        }
-
-        if (this.elements.addCategoryModal) {
-            this.elements.addCategoryModal.classList.remove('active');
-        }
+    // Checkbox'ların başlangıç değerlerini ayarla
+    initializeCheckboxes() {
+        // Tüm checkbox'ları varsayılan olarak işaretli yap
+        if (this.elements.includeUppercase) this.elements.includeUppercase.checked = true;
+        if (this.elements.includeLowercase) this.elements.includeLowercase.checked = true;
+        if (this.elements.includeNumbers) this.elements.includeNumbers.checked = true;
+        if (this.elements.includeSymbols) this.elements.includeSymbols.checked = true;
     }
 
     // Event listener'ları bağla
@@ -832,17 +986,17 @@ class UIManager {
     }
 
 
-    // Hızlı üret
-    quickGenerate() {
+    // Yeni şifre üret
+    regeneratePassword() {
         if (window.app && window.app.passwordGenerator) {
-            const password = window.app.passwordGenerator.generate({
-                length: 16,
-                includeUppercase: true,
-                includeLowercase: true,
-                includeNumbers: true,
-                includeSymbols: true
-            });
-            this.displayPassword(password);
+            try {
+                const options = this.getGeneratorOptions();
+                const password = window.app.passwordGenerator.generate(options);
+                this.displayPassword(password);
+            } catch (error) {
+                console.error('Şifre üretme hatası:', error);
+                this.showToast('Şifre üretilemedi: ' + error.message, 'error');
+            }
         }
     }
 
@@ -1055,16 +1209,23 @@ class UIManager {
 
     // Karakter önizlemesi
     updateCharacterPreview() {
-        const options = this.getGeneratorOptions();
-        const charPool = window.app?.passwordGenerator?.getCharacterPool(options) || '';
+        try {
+            const options = this.getGeneratorOptions();
+            const charPool = window.app?.passwordGenerator?.getCharacterPool(options) || '';
 
-        if (this.elements.characterPreview) {
-            if (charPool.length > 0) {
-                // İlk 50 karakteri göster
-                const preview = charPool.length > 50 ? charPool.substring(0, 47) + '...' : charPool;
-                this.elements.characterPreview.textContent = `Seçilen karakterler: ${preview}`;
-            } else {
-                this.elements.characterPreview.textContent = 'Hiç karakter türü seçilmedi';
+            if (this.elements.characterPreview) {
+                if (charPool.length > 0) {
+                    // İlk 50 karakteri göster
+                    const preview = charPool.length > 50 ? charPool.substring(0, 47) + '...' : charPool;
+                    this.elements.characterPreview.textContent = `Seçilen karakterler: ${preview}`;
+                } else {
+                    this.elements.characterPreview.textContent = 'Hiç karakter türü seçilmedi';
+                }
+            }
+        } catch (error) {
+            console.error('Karakter önizleme hatası:', error);
+            if (this.elements.characterPreview) {
+                this.elements.characterPreview.textContent = 'Önizleme hatası';
             }
         }
     }

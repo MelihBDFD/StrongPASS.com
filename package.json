@@ -1,0 +1,75 @@
+{
+  "name": "password-generator",
+  "version": "2.0.0",
+  "description": "Güçlü Şifre Üreteci - Güvenli şifreler oluşturun ve yönetin",
+  "main": "app.js",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "build": "echo 'No build process needed for vanilla JS'",
+    "test": "echo 'No tests yet - manual testing required'",
+    "lint": "echo 'Linting not configured yet'",
+    "format": "echo 'Code formatting not configured yet'"
+  },
+  "keywords": [
+    "password",
+    "generator",
+    "security",
+    "javascript",
+    "webapp",
+    "password-manager",
+    "encryption",
+    "cybersecurity"
+  ],
+  "author": "Password Generator Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/password-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/password-generator/issues"
+  },
+  "homepage": "https://github.com/username/password-generator#readme",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "dependencies": {},
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not dead"
+  ],
+  "files": [
+    "index.html",
+    "app.js",
+    "styles.css",
+    "constants.js",
+    "config.js",
+    "utils.js",
+    "validation.js",
+    "storage.js",
+    "password.js",
+    "analysis.js",
+    "animations.js",
+    "README.md",
+    ".gitignore"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./app.js",
+    "./constants": "./constants.js",
+    "./config": "./config.js",
+    "./utils": "./utils.js",
+    "./validation": "./validation.js",
+    "./storage": "./storage.js",
+    "./password": "./password.js",
+    "./analysis": "./analysis.js",
+    "./animations": "./animations.js"
+  }
+}
