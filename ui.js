@@ -413,22 +413,7 @@ class UIManager {
     typePassword(password) {
         const input = this.elements.passwordOutput;
         if (!input) return;
-
-        input.value = '';
-        let i = 0;
-
-        const interval = setInterval(() => {
-            if (i < password.length) {
-                input.value += password[i];
-                i++;
-                if (config.get('ui.enableSounds')) {
-                    this.animationManager.playSound('click');
-                }
-            } else {
-                clearInterval(interval);
-                setTimeout(() => this.animationManager.createParticles(input.parentElement), 200);
-            }
-        }, CONSTANTS.ANIMATIONS.TYPING_SPEED);
+        input.value = password;
     }
 
     // Update security display
