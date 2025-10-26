@@ -439,6 +439,7 @@ class UIManager {
             this.elements.strengthBar.style.width = `${score}%`;
             this.elements.strengthBar.className = 'strength-fill';
 
+            // Add color class based on score
             if (score < 20) this.elements.strengthBar.classList.add('strength-very-weak');
             else if (score < 40) this.elements.strengthBar.classList.add('strength-weak');
             else if (score < 60) this.elements.strengthBar.classList.add('strength-medium');
